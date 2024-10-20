@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #1b1c22; /* Dark background */
+  color: #fff; /* White text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center; /* Center align text */
+}
+
+.not-found-container {
+  background-color: #2b2d35; /* Slightly lighter than background */
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Softer, darker shadow */
+  width: 350px;
+  max-width: 90%; /* Responsive width */
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #e2e3e5; /* Light grey for heading */
+  font-weight: 500;
+}
+
+.not-found-link {
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: #6272a4; /* Button color */
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none; /* Remove underline */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.not-found-link:hover {
+  background-color: #51567a; /* Darker button color on hover */
+  box-shadow: 0 0 12px rgba(98, 114, 164, 0.5); /* Blue glow on hover */
+}

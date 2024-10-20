@@ -1,0 +1,102 @@
+/* Reset and basic setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #1b1c22; /* Dark background */
+  color: #fff; /* White text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Login Container */
+.login-container {
+  background-color: #2b2d35; /* Slightly lighter than background */
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Softer, darker shadow */
+  width: 380px;
+  max-width: 90%; /* Responsive width */
+  transition: transform 0.3s ease-in-out;
+}
+
+.login-container:hover {
+  transform: translateY(-10px); /* Subtle lift on hover */
+}
+
+/* Login Form */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  color: #e2e3e5; /* Light grey for heading */
+  font-weight: 500;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #b8b9c4; /* Muted grey for labels */
+}
+
+/* Input Fields */
+input {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  background-color: #1e2026; /* Dark input background */
+  border: 1px solid #3a3b42; /* Border matching theme */
+  border-radius: 8px;
+  color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+input::placeholder {
+  color: #7a7c87; /* Subtle placeholder text color */
+}
+
+input:focus {
+  border-color: #6272a4; /* Soft blue when focused */
+  outline: none;
+  box-shadow: 0 0 8px rgba(98, 114, 164, 0.5); /* Blue glow on focus */
+}
+
+/* Submit Button */
+.login-button {
+  background-color: #6272a4; /* Gemini-like blue color */
+  color: #fff;
+  padding: 0.9rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #51567a; /* Slightly darker on hover */
+  box-shadow: 0 0 12px rgba(98, 114, 164, 0.5); /* Blue glow on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 400px) {
+  .login-container {
+    width: 100%;
+  }
+}
