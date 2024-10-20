@@ -1,0 +1,121 @@
+/* General Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #1e1e1e; /* Dark theme background */
+  color: #f1f1f1;            /* Light text */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Content Section */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;  /* Allows the content to scroll if it gets too big */
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Fixed form at the bottom */
+.form-container {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #292929;
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-top: 2px solid #444;
+}
+
+/* Textarea styling */
+.search-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1.1rem;
+  resize: none;        /* Disable resizing */
+  outline: none;
+  height: 50px;        /* Fixed height */
+  overflow: hidden;    /* Hide scrollbars */
+}
+
+.search-input::placeholder {
+  color: #888;
+}
+
+/* Button Styling */
+.submit-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: #4a90e2;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #357ABD;
+}
+
+/* Display submitted content */
+.display-content {
+  margin-top: 20px;
+  background-color: #444;
+  padding: 15px;
+  border-radius: 8px;
+  white-space: pre-wrap; /* Preserve line breaks */
+  word-wrap: break-word; /* Avoid overflow */
+}
+
+.display-content h2 {
+  margin-bottom: 10px;
+}
+
+.display-content p {
+  color: #f1f1f1;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Media Queries for responsive design */
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .submit-button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+}
