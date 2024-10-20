@@ -16,6 +16,7 @@ body {
   padding: 20px;
 }
 
+/* App Container */
 .app-container {
   width: 100%;
   max-width: 800px;
@@ -24,6 +25,9 @@ body {
   justify-content: space-between;
   min-height: 100vh;
   position: relative;
+  border-radius: 12px;  /* Rounded corners for a softer look */
+  overflow: hidden;      /* Prevent overflow */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
 }
 
 /* Content Section */
@@ -33,10 +37,12 @@ body {
   overflow-y: auto;  /* Allows the content to scroll if it gets too big */
 }
 
+/* Title */
 .title {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
+  color: #4a90e2; /* Soft blue color for the title */
 }
 
 /* Fixed form at the bottom */
@@ -51,6 +57,7 @@ body {
   gap: 10px;
   align-items: center;
   border-top: 2px solid #444;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
 }
 
 /* Textarea styling */
@@ -66,6 +73,12 @@ body {
   outline: none;
   height: 50px;        /* Fixed height */
   overflow: hidden;    /* Hide scrollbars */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.search-input:hover {
+  background-color: #444; /* Slightly lighter background on hover */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* Subtle shadow on hover */
 }
 
 .search-input::placeholder {
@@ -81,11 +94,13 @@ body {
   color: #fff;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
 .submit-button:hover {
   background-color: #357ABD;
+  transform: translateY(-2px); /* Button lift effect */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Shadow on hover */
 }
 
 /* Display submitted content */
@@ -96,6 +111,12 @@ body {
   border-radius: 8px;
   white-space: pre-wrap; /* Preserve line breaks */
   word-wrap: break-word; /* Avoid overflow */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.display-content:hover {
+  background-color: #555; /* Darker background on hover */
+  transform: scale(1.01); /* Slight scale effect on hover */
 }
 
 .display-content h2 {
@@ -108,6 +129,20 @@ body {
   line-height: 1.5;
 }
 
+/* Loading Indicator */
+.loading-indicator {
+  font-size: 1rem;
+  color: #4a90e2;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Error Message */
+.error-message {
+  color: red; /* Error message color */
+  text-align: center;
+}
+
 /* Media Queries for responsive design */
 @media (max-width: 600px) {
   .title {
@@ -117,5 +152,9 @@ body {
   .submit-button {
     font-size: 0.9rem;
     padding: 8px 15px;
+  }
+
+  .search-input {
+    height: 45px; /* Slightly shorter for smaller screens */
   }
 }
