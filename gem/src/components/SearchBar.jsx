@@ -1,15 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Result from './Result';
 import Form from './Form';
+
 function SearchBar() {
 	const [textValue, setTextValue] = useState('');
-	const [responseText, setResponseText] = useState(''); // State to store the API response
-	const [error, setError] = useState(null); // State to store error messages
-	const [loading, setLoading] = useState(false); // State to manage loading status
+	const [responseText, setResponseText] = useState('');
+	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [recentResponses, setRecentResponses] = useState([]);
 
 	const URL =
-		'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent'; // API URL
-	const API_KEY = import.meta.env.VITE_GEMINI_API_KEY; // Accessing the API key from Vite's environment variables
+		'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+	const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+	// Load recent responses from localStorage on component mount
+	useEffect(() => {
+		const storedResponses = JSON.parse(localStorage.getItem('recentResponses')) || [];
+		setRecentResponses(storedResponses);
+	}, []);
+
+	// Store recent responses in local storage
+	const storeResponseInLocalStorage = (response) => {
+		let updatedResponses = [response, ...recentResponses];
+
+		// Keep only the latest 5 responses
+		if (updatedResponses.length > 5) {
+			updatedResponses = updatedResponses.slice(0, 5);
+		}
+
+		setRecentResponses(updatedResponses);
+		localStorage.setItem('recentResponses', JSON.stringify(updatedResponses));
+	};
 
 	// Handle textarea change
 	const handleTextChange = (e) => {
@@ -18,10 +39,10 @@ function SearchBar() {
 
 	// Handle form submit
 	const handleSubmit = async (e) => {
-		e.preventDefault(); // Prevent default form submission behavior
-		setResponseText(''); // Clear previous response
-		setError(null); // Clear previous error messages
-		setLoading(true); // Set loading state to true
+		e.preventDefault();
+		setResponseText('');
+		setError(null);
+		setLoading(true);
 
 		try {
 			const body = {
@@ -29,7 +50,7 @@ function SearchBar() {
 					{
 						parts: [
 							{
-								text: textValue, // Use the textarea value as text
+								text: textValue,
 							},
 						],
 					},
@@ -49,23 +70,23 @@ function SearchBar() {
 			}
 
 			const data = await response.json();
-			console.log('Response Data:', data); // Log the API response data
 
-			// Extract the text content from the response
+			// Extract and store the response text
 			if (data.candidates && data.candidates.length > 0) {
 				const content = data.candidates[0].content.parts[0].text;
-				setResponseText(content); // Set the API response to responseText
+				setResponseText(content);
+
+				// Store the successful response in local storage
+				storeResponseInLocalStorage(content);
 			} else {
 				setError('No meaningful content returned.');
 			}
 		} catch (error) {
-			console.error('Fetch Error:', error); // Log fetch errors
-			setError(error.message); // Set error message
+			setError(error.message);
 		} finally {
-			setLoading(false); // Set loading state to false after the request completes
+			setLoading(false);
 		}
 
-		// Clear the textarea after submission
 		setTextValue('');
 	};
 
@@ -73,20 +94,20 @@ function SearchBar() {
 		<div className='app-container'>
 			<div className='content'>
 				<h1 className='title'>GEMINI Clone</h1>
-				<Result
-					loading={loading}
-					error={error}
-					responseText={responseText}
-				></Result>
-				{/* This section will display the response content */}
+				<Result loading={loading} error={error} responseText={responseText} />
+
+				{/* Display recent responses */}
+				<div className='recent-responses'>
+					<h2>Recent Responses</h2>
+					<ul>
+						{recentResponses.map((resp, index) => (
+							<li key={index}>{resp}</li>
+						))}
+					</ul>
+				</div>
 			</div>
 
-			{/* Fixed form at the bottom */}
-			<Form
-				handleSubmit={handleSubmit}
-				textValue={textValue}
-				handleTextChange={handleTextChange}
-			/>
+			<Form handleSubmit={handleSubmit} textValue={textValue} handleTextChange={handleTextChange} />
 		</div>
 	);
 }

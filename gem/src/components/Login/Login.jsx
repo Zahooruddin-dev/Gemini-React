@@ -10,11 +10,9 @@ export default function Login() {
 	});
 	const [status, setStatus] = useState('idle');
 	const [error, setError] = useState(null);
-	const [isSubmitted, setIsSubmitted] = useState(false);
-
 	const location = useLocation();
-	const navigate = useNavigate(); // Changed to lowercase
-	const fromLocation = location.state?.form || '/';
+	const navigate = useNavigate();
+	const fromLocation = location.state?.from || '/'; // Change from "form" to "from"
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -23,13 +21,11 @@ export default function Login() {
 		loginUser(loginFormData)
 			.then((data) => {
 				setError(null);
-				localStorage.setItem('loggedIn', true);
-				// Redirect after successful login
-				navigate(fromLocation, { replace: true }); // Changed to lowercase
-				setIsSubmitted(true); // Set isSubmitted to true after successful login
+				localStorage.setItem('loggedin', true); // Ensure the key matches AuthRequired
+				navigate(fromLocation, { replace: true });
 			})
 			.catch((err) => {
-				setError(err.message || 'An error occurred'); // Set error message
+				setError(err.message || 'An error occurred');
 			})
 			.finally(() => {
 				setStatus('idle');
@@ -44,17 +40,16 @@ export default function Login() {
 		}));
 	};
 
-	if (isSubmitted) {
-		return (
-			<Navigate to='..' state={{ message: 'You must log in first' }} replace />
-		);
+	// Check if the user is already logged in
+	if (localStorage.getItem('loggedin')) {
+		return <Navigate to={fromLocation} replace />;
 	}
 
 	return (
 		<div className='login-container'>
 			<form className='login-form' onSubmit={handleSubmit}>
 				<h2>Login to Gemini</h2>
-				{error && <p className='error-message'>{error}</p>} {/* Display error message */}
+				{error && <p className='error-message'>{error}</p>}
 				<div className='form-group'>
 					<label htmlFor='email'>Email</label>
 					<input
@@ -80,7 +75,7 @@ export default function Login() {
 					/>
 				</div>
 				<button type='submit' className='login-button' disabled={status === 'submitting'}>
-					{status === 'submitting' ? 'Logging in...' : 'Login'} {/* Button text changes while submitting */}
+					{status === 'submitting' ? 'Logging in...' : 'Login'}
 				</button>
 			</form>
 		</div>

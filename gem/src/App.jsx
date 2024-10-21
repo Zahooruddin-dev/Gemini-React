@@ -13,13 +13,13 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path='/'>
-						<Route element={<AuthRequired />}>
-							<Route index element={<SearchBar />}></Route>
+{/* 						<Route element={<AuthRequired />}>
+ */}							<Route index element={<SearchBar />}></Route>
 							<Route path='/login' element={<Login />}></Route>
 						</Route>
 						<Route path='*' element={<NotFound />} />
-					</Route>
-				</Routes>
+{/* 					</Route>
+ */}				</Routes>
 			</BrowserRouter>
 		</>
 	);
