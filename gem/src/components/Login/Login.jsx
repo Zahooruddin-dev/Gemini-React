@@ -12,36 +12,34 @@ export default function Login() {
 	const [error, setError] = useState(null);
 	const location = useLocation();
 	const navigate = useNavigate();
-	const fromLocation = location.state?.from || '/'; // Change from "form" to "from"
+	const fromLocation = location.state?.from || '/';
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setStatus('submitting');
 
-		loginUser(loginFormData)
-			.then((data) => {
-				setError(null);
-				localStorage.setItem('loggedin', true); // Ensure the key matches AuthRequired
-				navigate(fromLocation, { replace: true });
-			})
-			.catch((err) => {
-				setError(err.message || 'An error occurred');
-			})
-			.finally(() => {
-				setStatus('idle');
-			});
+		try {
+			const data = await loginUser(loginFormData);
+			setError(null);
+			localStorage.setItem('loggedin', 'true'); // Set as string
+			console.log('User logged in:', localStorage.getItem('loggedin')); // Log the value
+			console.log('Login successful, user data:', data); // Log the user data
+			navigate(fromLocation, { replace: true });
+		} catch (err) {
+			setError(err.message || 'An error occurred');
+		} finally {
+			setStatus('idle');
+		}
 	};
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		setLoginFormData((prev) => ({
-			...prev,
-			[name]: value,
-		}));
+		setLoginFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
 	// Check if the user is already logged in
-	if (localStorage.getItem('loggedin')) {
+	if (localStorage.getItem('loggedin') === 'true') {
+		console.log('User already logged in, redirecting to:', fromLocation);
 		return <Navigate to={fromLocation} replace />;
 	}
 
@@ -74,7 +72,11 @@ export default function Login() {
 						placeholder='Enter your password'
 					/>
 				</div>
-				<button type='submit' className='login-button' disabled={status === 'submitting'}>
+				<button
+					type='submit'
+					className='login-button'
+					disabled={status === 'submitting'}
+				>
 					{status === 'submitting' ? 'Logging in...' : 'Login'}
 				</button>
 			</form>

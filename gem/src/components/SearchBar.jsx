@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Result from './Result';
 import Form from './Form';
+import { CgProfile } from 'react-icons/cg';
+import { Link } from 'react-router-dom';
 
 function SearchBar() {
 	const [textValue, setTextValue] = useState('');
@@ -15,7 +17,8 @@ function SearchBar() {
 
 	// Load recent responses from localStorage on component mount
 	useEffect(() => {
-		const storedResponses = JSON.parse(localStorage.getItem('recentResponses')) || [];
+		const storedResponses =
+			JSON.parse(localStorage.getItem('recentResponses')) || [];
 		setRecentResponses(storedResponses);
 	}, []);
 
@@ -89,9 +92,20 @@ function SearchBar() {
 
 		setTextValue('');
 	};
+	const handleLogout = () => {
+		localStorage.removeItem('loggedin'); // Clear local storage
+		navigate('/login'); // Redirect to login page
+	};
 
 	return (
 		<div className='app-container'>
+			<div className='user-icon'>
+				<Link to='#' onClick={handleLogout}>
+					{' '}
+					{/* Use '#' to prevent default link behavior */}
+					<CgProfile className='profile-icon' />
+				</Link>
+			</div>
 			<div className='content'>
 				<h1 className='title'>GEMINI Clone</h1>
 				<Result loading={loading} error={error} responseText={responseText} />
@@ -107,7 +121,11 @@ function SearchBar() {
 				</div>
 			</div>
 
-			<Form handleSubmit={handleSubmit} textValue={textValue} handleTextChange={handleTextChange} />
+			<Form
+				handleSubmit={handleSubmit}
+				textValue={textValue}
+				handleTextChange={handleTextChange}
+			/>
 		</div>
 	);
 }
