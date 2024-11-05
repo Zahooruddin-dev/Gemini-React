@@ -37,6 +37,7 @@ export async function loginUser(creds) {
 		const userDoc = userSnapshot.docs[0]; // Get the first matching user
 		const userData = userDoc.data();
 
+		
 		// Check if the passwords match directly (Not recommended for security reasons)
 		if (userData.password !== password) {
 			throw new Error('Invalid password');

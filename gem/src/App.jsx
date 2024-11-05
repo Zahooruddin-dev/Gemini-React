@@ -7,17 +7,17 @@ import AuthRequired from './components/Auth/AuthRequired';
 import './App.css';
 
 function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route element={<AuthRequired />}>
-                    <Route path="/" element={<SearchBar />} />
-                    <Route path="*" element={<NotFound />} />
-                </Route>
-                <Route path="/login" element={<Login />} />
-            </Routes>
-        </BrowserRouter>
-    );
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route element={<AuthRequired />}>
+					<Route path='/' element={<SearchBar />} />
+					<Route path='*' element={<NotFound />} />
+				</Route>
+				<Route path='/login' element={<Login />} />
+			</Routes>
+		</BrowserRouter>
+	);
 }
 
 export default App;
